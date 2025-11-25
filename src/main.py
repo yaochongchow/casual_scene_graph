@@ -1,4 +1,8 @@
-import graph_tool as gt
+try:
+    import graph_tool as gt
+except ImportError:
+    print("Graph-tool not found. This is expected if you are not running SBM/Planar experiments.")
+
 import os
 import pathlib
 import warnings
