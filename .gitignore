@@ -1,0 +1,6 @@
+*__pycache__
+# data/ogb/ogbg_molhiv/processed/*
+# data/visual_genome/raw/*
+data/ogb/ogbg_molhiv/processed/geometric_data_processed.pt
+data/visual_genome/raw/scene_graphs.json.zip
+data/visual_genome/raw/scene_graphs.json
