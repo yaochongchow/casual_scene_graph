@@ -1,0 +1,18 @@
+# OGBG-MOL configuration
+defaults:
+  - override /dataset: ogbg_mol
+  - override /model: discrete
+  - override /train: default
+
+train:
+  max_epochs: 500
+  batch_size: 64
+  accelerator: gpu
+  devices: 1
+
+dataset:
+  name: ogbg_mol
+  use_scaffold_split: true
+
+general:
+  name: ogbg_mol_run

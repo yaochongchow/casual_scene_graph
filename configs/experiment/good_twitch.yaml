@@ -1,0 +1,18 @@
+# GOOD-Twitch OOD baseline
+defaults:
+  - override /dataset: good_twitch
+  - override /model: discrete
+  - override /train: default
+
+train:
+  max_epochs: 300
+  batch_size: 32
+  accelerator: gpu
+  devices: 1
+
+dataset:
+  name: good_twitch
+  split: "region" # OOD split
+
+general:
+  name: good_twitch_run

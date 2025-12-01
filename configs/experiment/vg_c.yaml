@@ -1,0 +1,18 @@
+# VG-C Scene Graph experiment
+defaults:
+  - override /dataset: vg_c
+  - override /model: discrete
+  - override /train: default
+
+train:
+  max_epochs: 50
+  batch_size: 8
+  accelerator: gpu
+  devices: 1
+
+dataset:
+  name: vg_c
+  num_workers: 4
+
+general:
+  name: vg_c_sanity
