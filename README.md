@@ -161,6 +161,24 @@ model.sample_batch_ddim(batch_size=10, ddim_steps=50, guidance_scale=2.0)
 
 ---
 
+### 5. **QM9 Noise Schedule** (`src/noise.py`)
+
+#### What is it?
+A specialized noise schedule for QM9 that uses the exact marginal distributions of node and edge types from the dataset, rather than uniform distributions.
+
+#### Implementation
+- **`QM9Noise`**: Class that defines transition matrices using:
+  - Node Marginals: C (72.3%), N (11.5%), O (15.9%), F (0.26%)
+  - Edge Marginals: No Bond (72.6%), Single (23.8%), Double (2.7%), Triple (0.8%)
+
+#### Usage
+To use this noise schedule during training:
+```bash
+./train.sh dataset=qm9 model.transition=qm9_noise
+```
+
+---
+
 ## Running the Code
 
 ### 1. Run DDIM Tests
@@ -231,8 +249,11 @@ python3 src/main.py general.name=my_experiment dataset.name=zinc model.type=disc
   - `__init__()`: Added `irm_lambda` and `p_uncond` (MODIFIED)
 
 ### New Files
+- **`src/noise.py`**: QM9-specific noise schedule (NEW)
 - **`baselines/run_baselines.py`**: Pure PyG implementation of GRACE and GraphCL
 - **`tests/test_ddim.py`**: Unit tests for DDIM and CFG
+- **`tests/test_qm9_noise.py`**: Unit tests for QM9 noise
+- **`scripts/analyze_training_log.py`**: Script to plot training/val loss and validity
 - **`scripts/run_hpc.sh`**: SLURM script for Northeastern Discovery
 
 ### Original DiGress Files (Unchanged)

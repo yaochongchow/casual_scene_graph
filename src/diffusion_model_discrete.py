@@ -9,6 +9,7 @@ import os
 from models.transformer_model import GraphTransformer
 from diffusion.noise_schedule import DiscreteUniformTransition, PredefinedNoiseScheduleDiscrete,\
     MarginalUniformTransition
+from src.noise import QM9Noise
 from src.diffusion import diffusion_utils
 from metrics.train_metrics import TrainLossDiscrete
 from metrics.abstract_metrics import SumExceptBatchMetric, SumExceptBatchKL, NLL
@@ -89,6 +90,12 @@ class DiscreteDenoisingDiffusion(pl.LightningModule):
             self.transition_model = MarginalUniformTransition(x_marginals=x_marginals, e_marginals=e_marginals,
                                                               y_classes=self.ydim_output)
             self.limit_dist = utils.PlaceHolder(X=x_marginals, E=e_marginals,
+                                                y=torch.ones(self.ydim_output) / self.ydim_output)
+
+        elif cfg.model.transition == 'qm9_noise':
+            self.transition_model = QM9Noise()
+            self.limit_dist = utils.PlaceHolder(X=self.transition_model.node_marginals,
+                                                E=self.transition_model.edge_marginals,
                                                 y=torch.ones(self.ydim_output) / self.ydim_output)
 
         self.save_hyperparameters(ignore=['train_metrics', 'sampling_metrics'])
